@@ -18,12 +18,15 @@
       --link-hover: #ff9800;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: Arial; 
       margin: 0; 
       background: var(--bg-color); 
       color: var(--text-color); 
-      scroll-behavior: smooth;
       transition: background 0.3s, color 0.3s;
     }
     header {
@@ -95,8 +98,7 @@
     .project-card {
       opacity: 0;
       transform: translateY(20px);
-      animation: fadeInUp 0.6s ease-out forwards;
-      animation-delay: var(--delay);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
       border: 1px solid #ccc;
       padding: 20px;
       margin-bottom: 20px;
@@ -105,16 +107,14 @@
       border-radius: 8px;
     }
 
+    .project-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     .project-card:hover {
       transform: scale(1.03);
       box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-    }
-
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     .project-card h2 {
@@ -130,14 +130,14 @@
       border-color: #444;
     }
 
-    .about, .contact-form {
+    .about, .contact-form, .terminal-section {
       background: white;
       padding: 20px;
       border-radius: 8px;
       margin-bottom: 20px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    body.dark-mode .about, body.dark-mode .contact-form {
+    body.dark-mode .about, body.dark-mode .contact-form, body.dark-mode .terminal-section {
       background: #1e1e1e;
     }
     label, input, textarea {
@@ -172,8 +172,28 @@
       border-radius: 5px;
       cursor: pointer;
     }
+    .terminal-output {
+      background-color: #000;
+      color: #0f0;
+      padding: 15px;
+      border-radius: 5px;
+      height: 200px;
+      overflow-y: auto;
+      font-family: monospace;
+      margin-bottom: 10px;
+    }
+    .terminal-input {
+      width: 100%;
+      padding: 10px;
+      font-family: monospace;
+      background-color: #000;
+      color: #0f0;
+      border: 1px solid #444;
+      border-radius: 5px;
+    }
   </style>
 </head>
+<link rel="icon" type="image/png" href="favicon.png">
 <body>
   <header>
     <h1>Mon Portfolio</h1>
@@ -185,6 +205,7 @@
     <nav class="nav-links" id="navLinks">
       <a href="#accueil">Accueil</a>
       <a href="#projets">Projets</a>
+      <a href="#terminal">Démo espion</a>
       <a href="#a-propos">À propos</a>
       <a href="#contact">Contact</a>
       <a href="https://github.com/Guillaume-dev" target="_blank">GitHub</a>
@@ -193,21 +214,35 @@
   </header>
 
   <main>
+    <section id="accueil" class="about">
+      <h2>Bienvenue</h2>
+      <p>Bienvenue sur mon portfolio en ligne. Vous trouverez ici mes projets, mon parcours et comment me contacter.</p>
+    </section>
+
     <section id="projets">
       <div class="project-card" style="--delay: 0.2s;">
         <h2>Projet 1 : ToDo App</h2>
         <p>Application pour gérer une liste de tâches. Réalisée en HTML/CSS/JS.</p>
       </div>
-
       <div class="project-card" style="--delay: 0.4s;">
         <h2>Projet 2 : Mini Blog</h2>
         <p>Petit blog personnel avec Node.js et MongoDB.</p>
       </div>
-
+      <div class="project-card" style="--delay: 0.5s;">
+        <h2>Projet 3 : Clone de Twitter</h2>
+        <p>Application web inspirée de Twitter avec Express.js, MongoDB et EJS. Fonctionnalités : publication, suivi d'utilisateurs, like, fil d'actualité, etc.</p>
+        <p><a href="https://github.com/Guillaume-dev/twitter-clone" target="_blank">Voir le projet sur GitHub</a></p>
+      </div>
       <div class="project-card" style="--delay: 0.6s;">
         <h2>Responsable Affaire Client</h2>
         <p>Expérience dans la gestion de la relation client, le suivi des comptes et la coordination des projets pour garantir la satisfaction des partenaires.</p>
       </div>
+    </section>
+
+    <section id="terminal" class="terminal-section">
+      <h2>💻 Démo Terminal Espion</h2>
+      <div class="terminal-output" id="output"></div>
+      <input type="text" id="input" class="terminal-input" placeholder="Tapez une commande...">
     </section>
 
     <section id="a-propos" class="about">
@@ -220,19 +255,16 @@
       <form>
         <label for="nom">Nom :</label>
         <input type="text" id="nom" name="nom" required>
-
         <label for="email">Email :</label>
         <input type="email" id="email" name="email" required>
-
         <label for="message">Message :</label>
         <textarea id="message" name="message" rows="5" required></textarea>
-
         <button type="submit">Envoyer</button>
       </form>
       <br>
       <a href="cv.pdf" download><button>Télécharger mon CV 📄</button></a>
       <br><br>
-      <a href="cv.html" target="_blank"><button>Voir mon CV en ligne 💼</button></a>
+      <a href="cv-fr.html" target="_blank"><button>Voir mon CV en ligne 💼</button></a>
     </section>
   </main>
 
@@ -240,11 +272,9 @@
     function toggleMenu() {
       document.getElementById('navLinks').classList.toggle('show');
     }
-
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
     }
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -254,9 +284,36 @@
     }, {
       threshold: 0.2
     });
-
     document.querySelectorAll('.project-card').forEach(card => {
       observer.observe(card);
+    });
+
+    // Terminal interaction
+    const output = document.getElementById('output');
+    const input = document.getElementById('input');
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        const command = input.value.trim();
+        output.innerHTML += `> ${command}\n`;
+        switch (command.toLowerCase()) {
+          case 'help':
+            output.innerHTML += 'Commandes disponibles : help, scan, hack wifi, clear\n';
+            break;
+          case 'scan':
+            output.innerHTML += 'Scan des réseaux...\n- Freebox_007\n- Orange_Live\n- Netgear_Doom\n';
+            break;
+          case 'hack wifi':
+            output.innerHTML += 'Tentative de piratage... Succès !\nAccès au réseau Netgear_Doom\n';
+            break;
+          case 'clear':
+            output.innerHTML = '';
+            break;
+          default:
+            output.innerHTML += 'Commande inconnue. Tapez "help" pour voir les commandes.\n';
+        }
+        output.scrollTop = output.scrollHeight;
+        input.value = '';
+      }
     });
   </script>
 </body>
