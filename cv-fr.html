@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV - Guillaume Rakotomalala Tsilavina</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background-color: #f8f8f8;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      color: #003366;
+    }
+    .photo {
+      float: right;
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-left: 1rem;
+    }
+    section {
+      margin-bottom: 2rem;
+    }
+    ul {
+      padding-left: 1.2rem;
+    }
+    .lang-switch {
+      text-align: right;
+      margin-bottom: 1rem;
+    }
+    .lang-switch button {
+      padding: 5px 10px;
+      background: #003366;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+  <script>
+    function switchLanguage(lang) {
+      if (lang === 'en') {
+        window.location.href = 'cv-en.html';
+      } else {
+        window.location.href = 'cv.html';
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="lang-switch">
+      <button onclick="switchLanguage('fr')">FR</button>
+      <button onclick="switchLanguage('en')">EN</button>
+    </div>
+
+    <img src="photo.jpg" alt="Photo Guillaume" class="photo">
+    <h1>Guillaume Rakotomalala Tsilavina</h1>
+    <p><strong>Email :</strong> joranguillaume@gmail.com<br>
+       <strong>Téléphone :</strong> +261 32 12 39 612<br>
+       <strong>Adresse :</strong> Lot II I 61 TER à Alarobia, Madagascar</p>
+
+    <section>
+      <h2>Profil</h2>
+      <p>Professionnel passionné par la gestion de projets et les relations clients, avec une forte expertise dans le développement web et l’espionnage fictif pour jeu vidéo. Adaptabilité, esprit d’équipe et sens du service client sont mes principaux atouts.</p>
+    </section>
+
+    <section>
+      <h2>Compétences</h2>
+      <ul>
+        <li>Résolution de problèmes et gestion des conflits</li>
+        <li>Relation client, communication efficace</li>
+        <li>Suivi de projets techniques (télécoms/fibre)</li>
+        <li>HTML, CSS, JavaScript (notions)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Expérience Professionnelle</h2>
+      <p><strong>Responsable affaire Client (LDM)</strong> – Orange Business<br>
+      Mars 2023 - Mars 2025</p>
+      <ul>
+        <li>Suivi de projet avec les clients centraux et locaux</li>
+        <li>Coordination de la pose de matériel et fibre</li>
+        <li>Collaboration inter-équipes pour l’avancement des projets</li>
+      </ul>
+
+      <p><strong>Conseiller client expert</strong> – Webhelp (projet Total Direct Énergie)<br>
+      Septembre 2019 - Janvier 2023</p>
+      <ul>
+        <li>Gestion des appels entrants/sortants</li>
+        <li>Explication des factures et traitement des paiements</li>
+        <li>Support administratif par email</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Formation & Certifications</h2>
+      <ul>
+        <li>Certification Conformité et Compliance – Orange Sustainability Campus (05/06/2024)</li>
+        <li>Certification Cyber Ready 2024 – Orange Campus Cyber (21/11/2024)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Langues</h2>
+      <ul>
+        <li>Français : Langue maternelle</li>
+        <li>Anglais : Courant</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Centres d’intérêt</h2>
+      <ul>
+        <li>Cryptomonnaies</li>
+        <li>Musculation</li>
+        <li>Recherche sur le net</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>
